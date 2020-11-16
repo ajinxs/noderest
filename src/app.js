@@ -1,3 +1,4 @@
+const e = require("express");
 const express = require("express")
 const app = express()
 const port = process.env.PORT || 5000
@@ -10,9 +11,49 @@ app.use(express.json());
 
 
 //get student 
-app.get("/", (req,res,next)=>{
-    res.send("<h1>Welcome to GET Student Page</h1>");
+app.get("/students", async (req,res)=>{
+    try{
+        const studentData = await Student.find();
+        res.send(studentData);
+    }catch(e){  
+            res.send(e);
+    }
 })
+
+//get students individual data
+app.get("/student/:id", async(req,res)=>{
+    try{
+        const _id = req.params.id
+        const studentDetail = await Student.findById(_id);
+        res.send(studentDetail);
+
+        if(!studentDetail){
+            return res.status(404).send();
+        }else{
+            res.send(studentDetail)
+        }
+    }catch(e){
+        res.status(500).send(e); 
+    }
+});
+
+/*get student individual data by name
+app.get("/student/:name", async(req,res)=>{
+    try{
+        const name = req.params.name;
+        const studentName = await res.Student.find(name)
+        res.send(studentName);
+
+        if(!studentName){
+            return res.status(404).send();
+        }else{
+            res.send(studentName)
+        }
+
+    }catch(e){
+        res.status(500).send(e);
+    }
+});*/
 
 
 /*creating student
