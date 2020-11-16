@@ -11,7 +11,7 @@ app.use(express.json());
 
 
 //get student 
-app.get("/students", async (req,res)=>{
+app.get("/student", async(req,res)=>{
     try{
         const studentData = await Student.find();
         res.send(studentData);
@@ -34,6 +34,17 @@ app.get("/student/:id", async(req,res)=>{
         }
     }catch(e){
         res.status(500).send(e); 
+    }
+});
+
+app.delete("/student/:id", async(req,res)=>{
+    try{
+        const deleteStudent = await Student.findByIdAndDelete(req.params.id);
+        if(!deleteStudent){
+            return res.status(400).send();
+        }
+    }catch(e){
+        res.status(500).send(e);
     }
 });
 
@@ -70,7 +81,7 @@ app.post("/students", (req, res)=>{
 
 
 //creating student using asyn and await
-app.post("/students", async (req,res)=>{
+app.post("/student", async (req,res)=>{
 
     try{
         const user = new Student(req.body);
