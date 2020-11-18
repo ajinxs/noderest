@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 
-//mongodb://localhost:27017/schoodata
-mongoose.connect("mongodb://localhost:27017/schooldata",{
+mongoose.connect("",{
     useCreateIndex:true,
     useNewUrlParser:true,
     useUnifiedTopology:true
