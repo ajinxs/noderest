@@ -91,7 +91,20 @@ app.post("/student", async (req,res)=>{
     }catch(e){ 
         res.status(400).send(e);
     }
-})
+});
+
+app.delete("/student/:id", async(req,res)=>{
+
+    try{
+        const deleteStudent = await Student.findByIdAndDelete(req.params.id);
+        if(!req.params.id){
+            return res.status(400).send();
+        }
+        res.send(deleteStudent);
+    }catch(e){
+        res.status(404).send(e);
+    }
+});
 
 //Server listening to the request
 app.listen(port, ()=>{
