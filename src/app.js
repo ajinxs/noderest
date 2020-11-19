@@ -48,38 +48,6 @@ app.delete("/student/:id", async(req,res)=>{
     }
 });
 
-/*get student individual data by name
-app.get("/student/:name", async(req,res)=>{
-    try{
-        const name = req.params.name;
-        const studentName = await res.Student.find(name)
-        res.send(studentName);
-
-        if(!studentName){
-            return res.status(404).send();
-        }else{
-            res.send(studentName)
-        }
-
-    }catch(e){
-        res.status(500).send(e);
-    }
-});*/
-
-
-/*creating student
-app.post("/students", (req, res)=>{
-    const user = new Student(req.body)
-
-    //checking if the inserting data is ok or not
-    user.save().then(()=>{
-         res.status(201).send(user);
-    }).catch((e)=>{
-        res.status(400).send(e);
-    })
-})*/
-
-
 //creating student using asyn and await
 app.post("/student", async (req,res)=>{
 
@@ -105,6 +73,17 @@ app.delete("/student/:id", async(req,res)=>{
         res.status(404).send(e);
     }
 });
+
+app.patch('/student/:id', async(req,res)=>{
+
+    try{
+        const _id = req.params.id;
+        const updateStudent = await Student.findByIdAndUpdate(_id, req.body);
+        res.send(updateStudent);
+    }catch(e){
+        res.status(404).send(e);
+    }
+})
 
 //Server listening to the request
 app.listen(port, ()=>{
